@@ -3,32 +3,15 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
+        //make valid solved sudoku grid
         SudokuGrid sudokuGrid;
           do {
         SudokuGrid sudokuGrid1 = new SudokuGrid(9);
         sudokuGrid = sudokuGrid1;
         SudokuGenerator generator = new SudokuGenerator(sudokuGrid);
-        System.out.println("PROCESSING ");
+        System.out.println("Processing");
          } while (isGridNotValid(sudokuGrid));
         sudokuGrid.displayGrid();
-    }
-
-    private static boolean checkGridValid(SudokuGrid grid) {
-        boolean result = false;
-        //check every row     true means continue
-        for (ArrayList<SudokuGrid.Box> boxRow : grid.getGrid()) {
-            ArrayList<String> row = new ArrayList<>();
-            for (SudokuGrid.Box box : boxRow) {
-                row.add(box.getValues().get(0));
-            }
-            Set<String> list = row.stream().filter(item -> Collections.frequency(row, item) > 1).collect(Collectors.toSet());
-            //there are duplicates in row
-            if (list.size() > 0) {
-                result = true;
-            }
-        }
-        //check every column
-        return result;
     }
 
     private static boolean isGridNotValid(SudokuGrid grid) {
@@ -89,16 +72,6 @@ class SudokuGenerator {
                 }
             }
             count++;
-        }
-    }
-
-    private void ensureFactSet() {
-        for (ArrayList<SudokuGrid.Box> row : sudokuGrid.getGrid()) {
-            for (SudokuGrid.Box box : row) {
-                if (box.getFact().equals("")) {
-                    box.setValue(box.getValues().get(0));
-                }
-            }
         }
     }
 }
